@@ -59,24 +59,25 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
+            ViewHolder viewHolder;
             if (convertView == null) {
-                view = LayoutInflater.from(getContext()).inflate(R.layout.list_item_fruit,
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_fruit,
                         parent, false);
+                viewHolder = new ViewHolder();
+                viewHolder.imageView = (ImageView) convertView.findViewById(
+                        R.id.list_item_fruit_image_view);
+                viewHolder.textView = (TextView) convertView.findViewById(
+                        R.id.list_item_fruit_name_text_view);
+                convertView.setTag(viewHolder);
                 Log.d(TAG, "新造箱子" + (++mCountOfInflate));
             } else {
-                view = convertView;
+                viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            ImageView imageView = (ImageView) view.findViewById(
-                    R.id.list_item_fruit_image_view);
-            TextView textView = (TextView) view.findViewById(
-                    R.id.list_item_fruit_name_text_view);
-
             Fruit fruit = getItem(position);
-            imageView.setImageResource(fruit.getmImageId());
-            textView.setText(fruit.getmName());
-            return view;
+            viewHolder.imageView.setImageResource(fruit.getmImageId());
+            viewHolder.textView.setText(fruit.getmName());
+            return convertView;
         }
 
         @Override
@@ -84,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "getCount: " + super.getCount());
             return super.getCount();
         }
+
+        class ViewHolder {
+            ImageView imageView;
+            TextView textView;
+        }
+
     }
 
 }
