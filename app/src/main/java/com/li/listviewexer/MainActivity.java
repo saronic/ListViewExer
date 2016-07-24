@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.li.listviewexer.bean.Fruit;
 
@@ -30,8 +32,16 @@ public class MainActivity extends AppCompatActivity {
 
         initFruit();
 
-        FruitAdapter fruitAdapter = new FruitAdapter(this, R.layout.list_item_fruit, mFruitList);
+        FruitAdapter fruitAdapter = new FruitAdapter(this, R.layout.list_item_fruit,
+                mFruitList);
         mListView.setAdapter(fruitAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "你点了" +
+                        mFruitList.get(position).getmName(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
